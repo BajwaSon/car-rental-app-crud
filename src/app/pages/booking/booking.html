@@ -1,0 +1,229 @@
+<div class="flex flex-col h-full overflow-hidden">
+    <h1 class="text-3xl font-semibold text-indigo-400 mb-6">Bookings Management</h1>
+    <div class="bg-gray-800 p-6 h-full rounded-xl shadow-xl flex-1 overflow-hidden flex flex-col">
+        <div class="flex items-center justify-between pb-5">
+            <div>
+                <h3 class="text-xl font-semibold mb-2">Bookings List</h3>
+                <p class="text-gray-400 text-sm">
+                    A list of all the vehicles booking included bookig Id, customer name, model and rent amount etc.
+                </p>
+            </div>
+            <button command="show-modal" commandfor="addNewVehicleDialog"
+                class="flex flex-row items-center text-white gap-2 bg-indigo-600 hover:bg-indigo-800 px-4 py-2 rounded-lg text-sm font-medium shadow-lg cursor-pointer transition duration-300">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M3 13h8v8h2v-8h8v-2h-8V3h-2v8H3z"></path>
+                    </svg>
+                </span>
+                Add New Booking
+            </button>
+        </div>
+        <div class="flex-1 h-full overflow-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 py-4">
+                <!-- Single Booking Card -->
+                <div class="bg-gray-800 rounded-xl p-5 shadow-md border border-gray-700 hover:border-indigo-500 transition"
+                    *ngFor="let item of bookingList; let itemIndex = index">
+                    <!-- Header -->
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-white text-lg font-semibold">Booking #{{item.bookingId}}</h2>
+                        <span class="text-xs bg-indigo-600 px-2 py-1 rounded text-white">
+                            {{item.bookingUid}}
+                        </span>
+                    </div>
+
+                    <!-- Booking Date -->
+                    <div class="flex items-center mt-3 text-gray-300 text-sm">
+                        <!-- calendar icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-indigo-400" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="m19,4h-2v-2h-2v2h-6v-2h-2v2h-2c-1.1,0-2,.9-2,2v14c0,1.1.9,2,2,2h14c1.1,0,2-.9,2-2V6c0-1.1-.9-2-2-2ZM5,20v-12h14v-2,14s-14,0-14,0Z">
+                            </path>
+                            <path d="M7 11H17V13H7z"></path>
+                        </svg>
+                        {{item.bookingDate | date:'dd-MM-yyyy'}}
+                    </div>
+
+                    <!-- Customer -->
+                    <div class="flex items-center mt-3 text-gray-300 text-sm">
+                        <!-- user icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-indigo-400" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5m0-8c1.65 0 3 1.35 3 3s-1.35 3-3 3-3-1.35-3-3 1.35-3 3-3M4 22h16c.55 0 1-.45 1-1v-1c0-3.86-3.14-7-7-7h-4c-3.86 0-7 3.14-7 7v1c0 .55.45 1 1 1m6-7h4c2.76 0 5 2.24 5 5H5c0-2.76 2.24-5 5-5">
+                            </path>
+                        </svg>
+                        {{item.customerName}}
+                    </div>
+
+                    <!-- Customer Email -->
+                    <div class="flex items-center mt-3 text-gray-300 text-sm">
+                        <!-- send icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-indigo-400" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="m2.6 10.42 7.64 3.34 3.34 7.64c.16.37.52.6.92.6h.05a1 1 0 0 0 .9-.69l5.5-17c.12-.36.02-.75-.24-1.01a.98.98 0 0 0-1.01-.24L2.69 8.55c-.4.13-.67.49-.69.9-.02.42.22.8.6.97m15.85-4.86-4.09 12.63-2.44-5.59c-.1-.23-.28-.41-.52-.52L5.81 9.64l12.63-4.09Z">
+                            </path>
+                        </svg>
+                        {{item.brand}} - {{item.model}}
+                    </div>
+
+                    <!-- Customer Phone Number -->
+                    <div class="flex items-center mt-3 text-gray-300 text-sm">
+                        <!-- call icon -->
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 mr-2 text-indigo-400" fill="currentColor"
+                            viewBox="0 0 24 24">
+                            <path
+                                d="M18.07 22h.35c.47-.02.9-.26 1.17-.64l2.14-3.09c.23-.33.32-.74.24-1.14s-.31-.74-.64-.97l-4.64-3.09a1.47 1.47 0 0 0-.83-.25c-.41 0-.81.16-1.1.48l-1.47 1.59c-.69-.43-1.61-1.07-2.36-1.82-.72-.72-1.37-1.64-1.82-2.36l1.59-1.47c.54-.5.64-1.32.23-1.93L7.84 2.67c-.22-.33-.57-.57-.97-.64a1.455 1.455 0 0 0-1.13.24L2.65 4.41c-.39.27-.62.7-.64 1.17-.03.69-.16 6.9 4.68 11.74 4.35 4.35 9.81 4.69 11.38 4.69ZM6.88 10.05c-.16.15-.21.39-.11.59.05.09 1.15 2.24 2.74 3.84 1.6 1.6 3.75 2.7 3.84 2.75.2.1.44.06.59-.11l1.99-2.15 3.86 2.57-1.7 2.46c-1.16 0-6.13-.24-9.99-4.1S4 7.06 4 5.91l2.46-1.7 2.57 3.86-2.15 1.99Z">
+                            </path>
+                        </svg>
+                        {{item.mobileNo}}
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="mt-4 flex justify-between items-center">
+                        <div class="text-gray-300 text-sm">
+                            <p>Total: <span class="text-white font-semibold">{{item.totalBillAmount}}</span></p>
+                            <p>Discount: <span class="text-green-400 font-semibold">{{item.discount}}%</span></p>
+                        </div>
+
+                        <button
+                            class="bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1">
+                            <!-- eye icon -->
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24"
+                                stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                            </svg>
+                            View
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADD VEHICLE MODAL FORM -->
+<dialog id="addNewVehicleDialog" aria-labelledby="dialog-title"
+    class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+    <div
+        class="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in">
+    </div>
+    <div tabindex="0"
+        class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+        <div
+            class="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+            <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <form [formGroup]="bookingForm">
+                    <div class="space-y-12">
+                        <div class="pb-5">
+                            <div class="border-b border-gray-700 pb-4">
+                                <h2 class="text-base/8 font-semibold text-white">Add New Booking</h2>
+                                <p class="text-sm/6 text-gray-400">Use a correct brand name and vehicle specifications.
+                                </p>
+                            </div>
+
+                            <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+                                <div class="sm:col-span-3">
+                                    <label for="customerName" class="block text-sm/6 font-medium text-white">Customer
+                                        Name</label>
+                                    <div class="mt-2">
+                                        <input id="customerName" type="text" formControlName="customerName"
+                                            autocomplete="customer-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="customerCity" class="block text-sm/6 font-medium text-white">Customer
+                                        City</label>
+                                    <div class="mt-2">
+                                        <input id="customerCity" type="text" formControlName="customerCity"
+                                            autocomplete="customer-city"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="mobileNumber" class="block text-sm/6 font-medium text-white">Mobile
+                                        Number</label>
+                                    <div class="mt-2">
+                                        <input id="mobileNumber" type="tel" formControlName="mobileNo"
+                                            autocomplete="mobile-number"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="customerEmail"
+                                        class="block text-sm/6 font-medium text-white">Email</label>
+                                    <div class="mt-2">
+                                        <input id="customerEmail" type="email" formControlName="email"
+                                            autocomplete="customer-email"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="carId" class="block text-sm/6 font-medium text-white">Car ID
+                                    </label>
+                                    <div class="mt-2 grid grid-cols-1">
+                                        <select id="carId" name="deptId" formControlName="carId"
+                                            autocomplete="carId-name"
+                                            class="col-start-1 row-start-1 w-full appearance-none rounded-md bg-white/5 py-1.5 pr-8 pl-3 text-base text-white outline-1 -outline-offset-1 outline-white/10 *:bg-gray-800 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6">
+                                            <option selected value="Choose Car ID">Choose Car ID</option>
+                                            <option *ngFor="let item of carList" [value]="item.carId">
+                                                {{ item.regNo }}
+                                            </option>
+                                        </select>
+                                        <svg viewBox="0 0 16 16" fill="currentColor" data-slot="icon" aria-hidden="true"
+                                            class="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-400 sm:size-4">
+                                            <path
+                                                d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z"
+                                                clip-rule="evenodd" fill-rule="evenodd" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="bookingDate" class="block text-sm/6 font-medium text-white">Booking Date
+                                    </label>
+                                    <div class="mt-2">
+                                        <input id="bookingDate" type="date" formControlName="bookingDate"
+                                            autocomplete="booking-date"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="discountAmt" class="block text-sm/6 font-medium text-white">Discount (%)
+                                    </label>
+                                    <div class="mt-2">
+                                        <input id="discountAmt" type="tel" formControlName="discount"
+                                            autocomplete="booking-date"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="totalBillAmt" class="block text-sm/6 font-medium text-white">Total
+                                        Bill
+                                    </label>
+                                    <div class="mt-2">
+                                        <input id="totalBillAmt" type="tel" formControlName="totalBillAmount"
+                                            autocomplete="booking-date"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" command="close" commandfor="addNewVehicleDialog"
+                    class="inline-flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-800 sm:ml-3 sm:w-auto cursor-pointer"
+                    (click)="onSaveBooking()">Submit</button>
+                <button type="button" command="close" commandfor="addNewVehicleDialog"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">Cancel</button>
+            </div>
+        </div>
+    </div>
+</dialog>

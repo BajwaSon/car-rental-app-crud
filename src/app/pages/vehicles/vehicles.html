@@ -1,0 +1,266 @@
+<div class="flex flex-col h-full overflow-hidden">
+    <h1 class="text-3xl font-semibold text-indigo-400 mb-6">Vehicles Management</h1>
+    <div class="bg-gray-800 p-6 h-full rounded-xl shadow-xl flex-1 overflow-hidden flex flex-col">
+        <div class="flex items-center justify-between pb-5">
+            <div>
+                <h3 class="text-xl font-semibold mb-2">Vehicles List</h3>
+                <p class="text-gray-400 text-sm">
+                    A list of all the vehicle including brand, model, registration number, color, per day rate etc.
+                </p>
+            </div>
+            <button command="show-modal" commandfor="addNewVehicleDialog"
+                class="flex flex-row items-center text-white gap-2 bg-indigo-600 hover:bg-indigo-800 px-4 py-2 rounded-lg text-sm font-medium shadow-lg cursor-pointer transition duration-300">
+                <span>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                        viewBox="0 0 24 24">
+                        <path d="M3 13h8v8h2v-8h8v-2h-8V3h-2v8H3z"></path>
+                    </svg>
+                </span>
+                Add New Vehicle
+            </button>
+        </div>
+        <div class="flex-1 h-full overflow-auto">
+            <table class="min-w-full divide-y divide-gray-700 bg-gray-800 rounded-xl overflow-hidden">
+                <thead class="bg-gray-800 text-gray-300">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">CAR ID</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">BRAND</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">MODEL</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">YEAR</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">COLOR</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">RATE</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">REGISTRATION NUMBER</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium uppercase">ACTIONS</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-700">
+
+                    <tr class="hover:bg-gray-700/40" *ngFor="let row of carsList; let rowIndex = index">
+                        <td class="px-6 py-4">{{rowIndex+1}}</td>
+                        <td class="px-6 py-4 capitalize">{{row.brand}}</td>
+                        <td class="px-6 py-4 capitalize">{{row.model}}</td>
+                        <td class="px-6 py-4">
+                            {{row.year}}
+                        </td>
+                        <td class="space-x-2 px-6 py-4">
+                            {{row.color}}
+                        </td>
+                        <td class="space-x-2 px-6 py-4">
+                            <span
+                                class="inline-flex items-center rounded-md bg-green-400/10 px-2 py-1 text-xs font-medium text-green-500 inset-ring inset-ring-green-400/20">
+                                {{row.dailyRate}}</span>
+                        </td>
+                        <td class="space-x-2 px-6 py-4">
+                            {{row.regNo}}
+                        </td>
+                        <td class="px-6 py-4 space-x-2">
+                            <button
+                                class="px-3 py-2 rounded-lg text-xs font-medium inline-flex items-end rounded-md bg-yellow-400/10 text-yellow-500 inset-ring inset-ring-yellow-400/20 cursor-pointer gap-1 uppercase"
+                                command="show-modal" commandfor="editVehicleDialog" (click)="onEditVehicle(row)">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="m19.41,3c-.78-.78-2.05-.78-2.83,0L4.29,15.29c-.13.13-.22.29-.26.46l-1,4c-.08.34.01.7.26.95.19.19.45.29.71.29.08,0,.16,0,.24-.03l4-1c.18-.04.34-.13.46-.26l12.29-12.29c.78-.78.78-2.05,0-2.83l-1.59-1.59Zm-11.93,15.1l-2.11.53.53-2.11L15,7.41l1.59,1.59-9.1,9.1Zm10.51-10.51l-1.59-1.59,1.59-1.59,1.59,1.58-1.59,1.59Z">
+                                        </path>
+                                    </svg>
+                                </span>
+                                Edit
+                            </button>
+                            <button
+                                class="px-3 py-2 rounded-lg text-xs font-medium inline-flex items-end rounded-md bg-red-400/10 text-red-400 inset-ring inset-ring-red-400/20 cursor-pointer gap-1 uppercase"
+                                (click)="onDeleteVehicleById(row.carId)">
+                                <span>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path
+                                            d="M17 6V4c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H2v2h2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8h2V6zM9 4h6v2H9zM6 20V8h12v12z">
+                                        </path>
+                                        <path d="M9 10h2v8H9zM13 10h2v8h-2z"></path>
+                                    </svg>
+                                </span>
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ADD VEHICLE MODAL FORM -->
+<dialog id="addNewVehicleDialog" aria-labelledby="dialog-title"
+    class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+    <div
+        class="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in">
+    </div>
+    <div tabindex="0"
+        class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+        <div
+            class="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+            <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <form id="dataInputForm">
+                    <div class="space-y-12">
+                        <div class="pb-5">
+                            <div class="border-b border-gray-700 pb-4">
+                                <h2 class="text-base/8 font-semibold text-white">Add New Vehicle</h2>
+                                <p class="text-sm/6 text-gray-400">Use a correct brand name and vehicle specifications.
+                                </p>
+                            </div>
+
+                            <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+                                <div class="sm:col-span-3">
+                                    <label for="brandName" class="block text-sm/6 font-medium text-white">Brand</label>
+                                    <div class="mt-2">
+                                        <input id="brandName" type="text" name="brand" [(ngModel)]="newCarObj.brand"
+                                            autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="modelName" class="block text-sm/6 font-medium text-white">Model</label>
+                                    <div class="mt-2">
+                                        <input id="modelName" type="text" name="model" [(ngModel)]="newCarObj.model"
+                                            autocomplete="email"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="manfYear" class="block text-sm/6 font-medium text-white">Year</label>
+                                    <div class="mt-2">
+                                        <input id="manfYear" type="tel" name="year" [(ngModel)]="newCarObj.year"
+                                            autocomplete="family-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="carColor" class="block text-sm/6 font-medium text-white">Color</label>
+                                    <div class="mt-2">
+                                        <input id="carColor" type="text" name="color" [(ngModel)]="newCarObj.color"
+                                            autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="ratePerDay" class="block text-sm/6 font-medium text-white">Rate Per
+                                        Day</label>
+                                    <div class="mt-2">
+                                        <input id="ratePerDay" type="text" name="dailyRate"
+                                            [(ngModel)]="newCarObj.dailyRate" autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="registrationNumber"
+                                        class="block text-sm/6 font-medium text-white">Registration
+                                        No.</label>
+                                    <div class="mt-2">
+                                        <input id="registrationNumber" type="text" name="regNo"
+                                            [(ngModel)]="newCarObj.regNo" autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" command="close" commandfor="addNewVehicleDialog"
+                    class="inline-flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-800 sm:ml-3 sm:w-auto cursor-pointer"
+                    (click)="onSaveVehicle()">Submit</button>
+                <button type="button" command="close" commandfor="addNewVehicleDialog"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">Cancel</button>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<!-- EDIT VEHICLE MODAL FORM -->
+<dialog id="editVehicleDialog" aria-labelledby="dialog-title"
+    class="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent">
+    <div
+        class="fixed inset-0 bg-gray-900/50 transition-opacity data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in">
+    </div>
+    <div tabindex="0"
+        class="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+        <div
+            class="relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in sm:my-8 sm:w-full sm:max-w-lg data-closed:sm:translate-y-0 data-closed:sm:scale-95">
+            <div class="bg-gray-800 px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <form>
+                    <div class="space-y-12">
+                        <div class="pb-5">
+                            <div class="border-b border-gray-700 pb-4">
+                                <h2 class="text-base/8 font-semibold text-white">Edit Vehicle</h2>
+                                <p class="text-sm/6 text-gray-400">Use a correct brand name and vehicle specifications.
+                                </p>
+                            </div>
+
+                            <div class="mt-5 grid grid-cols-1 gap-x-6 gap-y-6 sm:grid-cols-6">
+                                <div class="sm:col-span-3">
+                                    <label for="brandName" class="block text-sm/6 font-medium text-white">Brand</label>
+                                    <div class="mt-2">
+                                        <input id="brandName" type="text" name="brand" [(ngModel)]="newCarObj.brand"
+                                            autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="modelName" class="block text-sm/6 font-medium text-white">Model</label>
+                                    <div class="mt-2">
+                                        <input id="modelName" type="text" name="model" [(ngModel)]="newCarObj.model"
+                                            autocomplete="email"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="manfYear" class="block text-sm/6 font-medium text-white">Year</label>
+                                    <div class="mt-2">
+                                        <input id="manfYear" type="tel" name="year" [(ngModel)]="newCarObj.year"
+                                            autocomplete="family-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="carColor" class="block text-sm/6 font-medium text-white">Color</label>
+                                    <div class="mt-2">
+                                        <input id="carColor" type="text" name="color" [(ngModel)]="newCarObj.color"
+                                            autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="ratePerDay" class="block text-sm/6 font-medium text-white">Rate Per
+                                        Day</label>
+                                    <div class="mt-2">
+                                        <input id="ratePerDay" type="text" name="dailyRate"
+                                            [(ngModel)]="newCarObj.dailyRate" autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                                <div class="sm:col-span-3">
+                                    <label for="registrationNumber"
+                                        class="block text-sm/6 font-medium text-white">Registration
+                                        No.</label>
+                                    <div class="mt-2">
+                                        <input id="registrationNumber" type="text" name="regNo"
+                                            [(ngModel)]="newCarObj.regNo" autocomplete="given-name"
+                                            class="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                <button type="button" command="close" commandfor="editVehicleDialog"
+                    class="inline-flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-800 sm:ml-3 sm:w-auto cursor-pointer"
+                    (click)="onUpdateVehicle()">Update</button>
+                <button type="button" command="close" commandfor="editVehicleDialog"
+                    class="mt-3 inline-flex w-full justify-center rounded-md bg-white/10 px-3 py-2 text-sm font-semibold text-white inset-ring inset-ring-white/5 hover:bg-white/20 sm:mt-0 sm:w-auto cursor-pointer">Cancel</button>
+            </div>
+        </div>
+    </div>
+</dialog>
