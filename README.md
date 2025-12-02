@@ -1,10 +1,12 @@
 🚗 Car Renting App in Angular
+
 Complete CRUD-Based Car Rental System.
 
 This project is a car-renting application built using Angular, designed for beginners and intermediate learners who want to practice real-world Angular development.
 The app includes Vehicle CRUD, Car Booking Module, and a Responsive UI built with Tailwind CSS.
 
 🌟 Features
+
 🔧 Vehicle Management (CRUD)
 Add New Cars
 Edit Car Details
