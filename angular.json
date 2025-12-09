@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "employee-leave-management": {
+    "car-rental-app": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -69,10 +69,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "employee-leave-management:build:production"
+              "buildTarget": "car-rental-app:build:production"
             },
             "development": {
-              "buildTarget": "employee-leave-management:build:development"
+              "buildTarget": "car-rental-app:build:development"
             }
           },
           "defaultConfiguration": "development"
